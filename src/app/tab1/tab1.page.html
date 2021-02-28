@@ -1,0 +1,117 @@
+<ion-header [translucent]="true">
+
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        <!-- <ion-icon name="logo-usd"></ion-icon> SobControle -->
+      </ion-title>
+
+  <center>
+      <img src="assets/icon/sobcontrole.png" style="width:85px;"/>
+      </center>
+
+    </ion-toolbar>
+
+    <ion-toolbar color="primary">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+                <ion-icon text-left name="calendar-sharp" size="large"></ion-icon>
+
+                        <ion-title>
+                        <ion-datetime (ionChange)="rebuscarData()"
+                        [(ngModel)]="dataSaldo" cancelText="Cancelar"
+                        doneText="Ok" max="2050-12-09"
+                        displayFormat="MM/YYYY" placeholder="Selecione uma Data"></ion-datetime>
+                      </ion-title>
+
+            </ion-col>
+
+
+
+          </ion-row>
+        </ion-grid>
+
+
+    </ion-toolbar>
+
+
+
+    <ion-toolbar color="primary">
+
+      <ion-text>
+        <center><h2>Saldo Mês</h2></center>
+      </ion-text>
+
+      <ion-text>
+        <center><h4>{{saldoMes}}</h4></center>
+      </ion-text>
+
+    </ion-toolbar>
+  </ion-header>
+
+
+
+  <ion-card color="success"  (click)="chamarRecebidos()">
+      <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col horizontal="start" >
+                  <h2>Recebidos</h2>
+              </ion-col>
+
+              <ion-col horizontal="end" >
+                  <h2>R$ {{valorRecebido}}</h2>
+              </ion-col>
+            </ion-row>
+
+
+            <ion-row>
+              <ion-col>
+                  <h2>À receber</h2>
+              </ion-col>
+
+              <ion-col>
+                  <h2>R$ {{valorReceber}}</h2>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+      </ion-card-content>
+  </ion-card>
+
+
+
+
+  <ion-card color="danger" (click)="chamarDespesas()">
+      <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                  <h2>Despesas</h2>
+              </ion-col>
+
+              <ion-col>
+                  <h2>R$ {{valorDespesa}}</h2>
+              </ion-col>
+            </ion-row>
+
+
+            <ion-row>
+              <ion-col>
+                  <h2>À pagar</h2>
+              </ion-col>
+
+              <ion-col>
+                  <h2>R$ {{valorPagar}}</h2>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+      </ion-card-content>
+  </ion-card>
+
+
+</ion-content>

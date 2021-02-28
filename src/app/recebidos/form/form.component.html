@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start" (click)="fecharModal()">
+      <ion-button>
+    <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    </ion-buttons>
+
+    <ion-title>ADD</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="excluirLancamento()">
+      <ion-icon name="trash-outline" color="danger"></ion-icon>
+      </ion-button>
+      <ion-button (click)="todo.valid && salvarLancamento()" [disabled]="!todo.valid">
+      <ion-icon name="save-outline" color="success"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="todo" >
+
+  <ion-item>
+    <ion-label position="floating">Descrição</ion-label>
+    <ion-input name="descricao" formControlName="descricao" placeholder="Descrição" [(ngModel)]="lancamento.descricao"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Data</ion-label>
+    <ion-datetime formControlName="data" [(ngModel)]="lancamento.data" cancelText="Cancelar" doneText="OK"
+     max="2050-12-09" displayFormat="DD/MM/YYYY" placeholder="Selecione uma Data"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Valor</ion-label>
+    <ion-input formControlName="valor" [(ngModel)]="lancamento.valor"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Repetir o Lançamento</ion-label>
+    <ion-toggle formControlName="repetirLancamento" [(ngModel)]="repetirLancamento" color="success"></ion-toggle>
+  </ion-item>
+
+  <ion-item *ngIf="repetirLancamento==1">
+    <ion-label position="floating">Quantidade de Vezes</ion-label>
+    <ion-input formControlName="quantidadeVezes" [(ngModel)]="lancamento.quantidadeVezes" type="number"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Recebido?</ion-label>
+    <ion-toggle formControlName="situacao" [(ngModel)]="lancamento.situacao" color="success"></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Categoria?</ion-label>
+    <ion-select formControlName="categoria" cancelText="Cancelar" interface="action-sheet" [(ngModel)]="lancamento.categoria">
+      <ion-select-option value="Salário">Salário</ion-select-option>
+      <ion-select-option value="Aluguel">Aluguel</ion-select-option>
+      <ion-select-option value="Vendas">Vendas</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+</form>
+
+</ion-content>
