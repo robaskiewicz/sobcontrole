@@ -22,7 +22,7 @@
               [(ngModel)]="dataSaldo" cancelText="Cancelar" doneText="Ok" max="2050-12-09"
               displayFormat="MM/YYYY" placeholder="Selecione uma Data"></ion-datetime>
             </ion-title>
-            
+
           </ion-col>
 
 
@@ -41,7 +41,10 @@
             <p>{{lancamento.categoria}} - {{lancamento.dataLacamento | date:"dd/MM/yyyy"}}</p>
 
           </ion-label>
-          <p>{{lancamento.valor | currency:"BRL":true:"1.2-2" }}  <ion-icon *ngIf='lancamento.situacao==1' color="success" name="checkmark-done-outline"></ion-icon> <ion-icon *ngIf="lancamento.situacao==0" color="danger" name="close-outline"></ion-icon></p>
+          <p>{{lancamento.valor | currency:"BRL":true:"1.2-2" }}
+             <ion-icon *ngIf='lancamento.situacao==1' color="success" name="checkmark-done-outline"></ion-icon>
+             <ion-icon *ngIf="lancamento.situacao==0" color="danger" name="close-outline"></ion-icon>
+           </p>
         </ion-item>
   </ion-list>
 

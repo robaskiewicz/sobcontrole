@@ -13,19 +13,46 @@
     </ion-toolbar>
   </ion-header>
 
+
+    <ion-card color="primary">
+  <ion-card-header>
+    <center>
+    <h4>{{nomeMoeda}}</h4>
+    <p>{{moedaCode}} > {{moedaCodeIn}}</p>
+    </center>
+
+    <span>Data Inicial</span>
+    <ion-datetime (ionChange)="rebuscarData()"
+    [(ngModel)]="dataInicial" cancelText="Cancelar" doneText="Ok" max="2050-12-09"
+    displayFormat="DD/MM/YYYY" placeholder="Selecione uma Data">
+    </ion-datetime>
+
+    <p>Data Final</p>
+    <ion-datetime (ionChange)="rebuscarData()"
+    [(ngModel)]="dataFim" cancelText="Cancelar" doneText="Ok" max="2050-12-09"
+    displayFormat="DD/MM/YYYY" placeholder="Selecione uma Data">
+    </ion-datetime>
+
+
+</ion-card-header>
+
+</ion-card>
+
   <ion-list>
-      <ion-item color="primary">
-        <h2>{{nomeMoeda}}  -  {{moedaCode}} > {{moedaCodeIn}}</h2>
-      </ion-item>
-      
     <ion-item *ngFor="let listas of lista">
           <ion-label>
 
-            <p><ion-icon name="trending-up-outline" color="success"></ion-icon> {{listas.high}}
-              <ion-icon name="trending-down-outline" color="danger"></ion-icon> {{listas.low}}</p>
-            <h2><ion-icon name="megaphone-outline" color="warning"></ion-icon> {{listas.bid}}</h2>
+                    <p>
+                      <ion-icon name="trending-up-outline" color="success"></ion-icon> {{listas.high}}
+                      <ion-icon name="trending-down-outline" color="danger"></ion-icon> {{listas.low}}
+                    </p>
+                    <h2>
+                      <ion-icon name="megaphone-outline" color="warning"></ion-icon> {{listas.bid}}
+                    </h2>
 
           </ion-label>
+          <p style="font-size:12px;"> <ion-icon name="calendar-outline" color="warning"></ion-icon> {{listas.timestamp}}</p>
+
     </ion-item>
   </ion-list>
 </ion-content>

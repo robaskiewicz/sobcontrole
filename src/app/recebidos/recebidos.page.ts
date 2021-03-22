@@ -7,6 +7,8 @@ import {LancamentosService} from '../services/lancamentos.service';
 import  {Lancamentos} from '../model/lancamentos';
 import { DatePipe } from '@angular/common';
 
+
+
 @Component({
   selector: 'app-recebidos',
   templateUrl: './recebidos.page.html',
@@ -16,7 +18,13 @@ export class RecebidosPage implements OnInit {
 
   dataSaldo = Date();
   listaLancamentos = [];
-  constructor(public modalController: ModalController, public lancamentoService:LancamentosService, public datepipe: DatePipe) {
+
+
+  constructor(public modalController: ModalController,
+    public lancamentoService:LancamentosService,
+    public datepipe: DatePipe) {
+
+      
   }
 
   ngOnInit(){
@@ -36,7 +44,12 @@ export class RecebidosPage implements OnInit {
           }
         })
       })
+
+
+
   }
+
+
 
 
     rebuscarData() {
@@ -44,9 +57,6 @@ export class RecebidosPage implements OnInit {
       // buscarData();
     }
 
-  // abreFormulario22(){
-  //  this.router.navigate(['formulario']);
-  // }
 
   async abreFormulario() {
     const modal = await this.modalController.create({

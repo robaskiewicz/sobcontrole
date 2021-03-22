@@ -1,7 +1,8 @@
 {
   "name": "financeirofacil",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { ApiService } from '../api.service';
 
 @Component({
@@ -9,21 +10,46 @@ import { ApiService } from '../api.service';
 export class Tab2Page {
 
 lista = [];
-nomeMoeda = String;
+nomeMoeda =  String;
 moedaCode = String;
-moedaCodeIn = String;
+moedaCodeIn =  String;
+moedaData =  String;
 
-  constructor(private apiService: ApiService) {
-    this.listaDados();
+dataAtual = new Date();
+dataInicial = Date();
+dataFim = Date();
+dataString = String;
+
+
+  constructor(private apiService: ApiService,
+  public datepipe: DatePipe) {
+
+    this.listaDados(this.datepipe.transform(this.dataInicial, 'yyyyMM01'), this.datepipe.transform(this.dataFim, 'yyyyMMdd'));
   }
 
-  listaDados(){
-    this.apiService.getResultados().subscribe(data=>{
-      this.nomeMoeda = data[0]['name'];
-      this.moedaCode = data[0]['code'];
-      this.moedaCodeIn = data[0]['codein'];
-      this.lista = data;
-      console.log(data);
+rebuscarData() {
+      this.listaDados(this.datepipe.transform(this.dataInicial, 'yyyyMMdd'), this.datepipe.transform(this.dataFim, 'yyyyMMdd'));
+}
+
+  listaDados(dataInicial : string, dataFinal : string){
+    this.apiService.getCotacaoPorData(dataInicial, dataFinal).subscribe(data=>{
+
+        for (var i in data) {
+
+          if(i==='0'){
+            this.nomeMoeda = data[i]['name'];
+            this.moedaCode = data[i]['code'];
+            this.moedaCodeIn = data[i]['codein'];
+          }
+
+          const date = new Date(data[i]['timestamp']*1000);
+          //console.log(this.datepipe.transform(date, 'yyyyMMdd'));
+
+          data[i]['timestamp'] = this.datepipe.transform(date, 'dd/MM/yyyy');
+
+          this.lista.push(data[i]);
+        }
+
     })
   }
 

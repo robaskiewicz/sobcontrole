@@ -5,6 +5,8 @@ import { LancamentosService } from '../../services/lancamentos.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 
+import { ApiService } from '../../api.service';
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -17,7 +19,12 @@ export class FormComponent implements OnInit {
   @Input() key:string;
     private todo: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, public modalController: ModalController, public lancamentosService:LancamentosService) {
+    tituloCode = String;
+    tituloCodeIn = String;
+    cotacaoHighDoDia = String;
+
+  constructor(private formBuilder: FormBuilder, public modalController: ModalController, public lancamentosService:LancamentosService,
+  private apiService: ApiService) {
     this.todo = this.formBuilder.group({
        descricao: ['ss', Validators.required],
        data: [new Date()],
@@ -28,6 +35,8 @@ export class FormComponent implements OnInit {
        situacao: [true],
        repetirLancamento: [false]
      });
+
+     this.buscaCotacaoAtual();
    }
 
   ngOnInit() {
@@ -78,6 +87,14 @@ export class FormComponent implements OnInit {
     this.modalController.dismiss({
       'dismissed': true
     });
+  }
+
+  buscaCotacaoAtual(){
+    this.apiService.getUltimaCotacao().subscribe(data=>{
+        this.cotacaoHighDoDia = data[0]['high'];
+        this.tituloCode = data[0]['code'];
+        this.tituloCodeIn = data[0]['codein'];
+    })
   }
 
 }

@@ -17,6 +17,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { DatePipe } from '@angular/common';
 import { HttpClientModule  } from '@angular/common/http';
 
+import { AdMobFree } from '@ionic-native/admob-free/ngx';
+import { AdmobService } from './services/admob.service';
+
 
 import { environment } from '../environments/environment';
 // import { registerLocaleData } from '@angular/common';
@@ -30,7 +33,7 @@ import { environment } from '../environments/environment';
     AngularFireAuthModule, AngularFireDatabaseModule, AngularFireStorageModule],
   providers: [
     StatusBar,
-    SplashScreen, DatePipe,
+    SplashScreen, DatePipe, AdMobFree, AdmobService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

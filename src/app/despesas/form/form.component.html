@@ -34,6 +34,11 @@
         placeholder="Selecione uma Data"></ion-datetime>
       </ion-item>
 
+
+      <ion-item>
+        <ion-badge color="warning">Cotação Atual : {{tituloCode}} <span style="font-size:8px;"> > </span> {{tituloCodeIn}}  <span style="font-size:18px;">{{cotacaoHighDoDia}}</span></ion-badge>
+      </ion-item>
+
       <ion-item>
         <ion-label position="floating">Valor</ion-label>
         <ion-input formControlName="valor" placeholder="(R$) Real"  [(ngModel)]="lancamento.valor"></ion-input>
