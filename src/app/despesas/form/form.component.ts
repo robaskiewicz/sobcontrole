@@ -19,6 +19,8 @@ export class FormComponent implements OnInit {
   @Input() key:string;
     private todo: FormGroup;
 
+    corValor;
+
     tituloCode = String;
     tituloCodeIn = String;
     cotacaoHighDoDia = String;
@@ -52,7 +54,8 @@ export class FormComponent implements OnInit {
         categoria:'Aluguel',
         data: new Date(),
         quantidadeVezes:0,
-        situacao:true};
+        situacao:true,
+      repetirLancamento: false};
     }
   }
 
@@ -64,22 +67,61 @@ export class FormComponent implements OnInit {
    }
 
 
-  salvarLancamento(){
-    if(this.key==undefined){
-      this.lancamentosService.criarLancamento(this.lancamento).then(res => {
-        console.log("DEU CERTO!!!!!");
-        console.log(res);
-          this.fecharModal();
-      }).catch(error=> console.log(error));
+   salvarLancamento() {
 
-    }else{
+     if (this.lancamento.valor > 0) {
+       if (this.key == undefined) {
+         this.lancamentosService.criarLancamento(this.lancamento).then(res => {
 
-      this.lancamentosService.atualizarLancamento(this.key, this.lancamento).then(res => {
-        console.log("DEU CERTO Alterar!!!!!");
-        console.log(res);
-          this.fecharModal();
-      }).catch(error=> console.log(error));
-    }
+           if (this.repetirLancamento == true) {
+             let ultimoRegistro = false;
+             for (let x = 0; x < this.lancamento.quantidadeVezes; x++) {
+               if (x == (this.lancamento.quantidadeVezes - 1)) {
+                 ultimoRegistro = true;
+               }
+
+               let novoLancamento:Lancamentos=new Lancamentos();
+               Object.assign(novoLancamento, this.lancamento);
+               var novaData = new Date();
+
+               novaData = this.addMonths((x + 1));
+               novoLancamento.data = novaData;
+
+               this.lancamentosService.criarLancamento(novoLancamento).then(res => {
+
+                 if (ultimoRegistro) {
+                   this.fecharModal();
+                 }
+               }).catch(error => console.log(error));
+             }
+           } else {
+             this.fecharModal();
+           }
+
+
+         }).catch(error => console.log(error));
+
+
+       } else {
+         this.lancamentosService.atualizarLancamento(this.key, this.lancamento).then(res => {
+           //  console.log('Deu certo alterar');
+           //    console.log(res);
+           this.fecharModal();
+         }).catch(error => console.log(error));
+       }
+     } else {
+       this.corValor = "red";
+     }
+
+   }
+
+   addMonths(m) {
+    var d = new Date(this.lancamento.data);
+    var years = Math.floor(m / 12);
+    var months = m - (years * 12);
+    if (years) d.setFullYear(d.getFullYear() + years);
+    if (months) d.setMonth(d.getMonth() + months);
+    return d;
   }
 
 

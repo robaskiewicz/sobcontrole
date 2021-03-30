@@ -7,4 +7,5 @@ export class Lancamentos{
   data:Date;
   quantidadeVezes:number;
   situacao:boolean;
+  repetirLancamento:boolean;
 }

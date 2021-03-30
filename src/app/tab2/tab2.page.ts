@@ -21,18 +21,39 @@ dataFim = Date();
 dataString = String;
 
 
+
   constructor(private apiService: ApiService,
   public datepipe: DatePipe) {
+    this.lista = [];
+    this.listaDados(this.datepipe.transform(this.dataAtual, 'yyyyMM01'), this.datepipe.transform(this.dataAtual, 'yyyyMMdd'));
 
-    this.listaDados(this.datepipe.transform(this.dataInicial, 'yyyyMM01'), this.datepipe.transform(this.dataFim, 'yyyyMMdd'));
   }
 
+
+
 rebuscarData() {
+      this.lista = [];
       this.listaDados(this.datepipe.transform(this.dataInicial, 'yyyyMMdd'), this.datepipe.transform(this.dataFim, 'yyyyMMdd'));
+      console.log(this.dataInicial);
+      console.log(this.dataFim);
 }
 
   listaDados(dataInicial : string, dataFinal : string){
     this.apiService.getCotacaoPorData(dataInicial, dataFinal).subscribe(data=>{
+
+      // data.forEach(item => {
+      //
+      //     // let a = item.payload.toJSON();
+      //
+      //   // const date = new Date(a['timestamp']*1000);
+      //     // console.log(this.datepipe.transform(date, 'yyyyMMdd'));
+      //
+      //     // item['timestamp'] = this.datepipe.transform(date, 'dd/MM/yyyy');
+      //
+      //   this.lista.push(item);
+      // })
+
+        this.lista.pop();
 
         for (var i in data) {
 
@@ -49,6 +70,11 @@ rebuscarData() {
 
           this.lista.push(data[i]);
         }
+
+
+
+
+
 
     })
   }

@@ -51,15 +51,15 @@
     <ion-input formControlName="valor" [(ngModel)]="lancamento.valor"></ion-input>
   </ion-item>
 
-  <ion-item>
-    <ion-label position="floating">Repetir o Lançamento</ion-label>
-    <ion-toggle formControlName="repetirLancamento" [(ngModel)]="repetirLancamento" color="success"></ion-toggle>
-  </ion-item>
+    <!-- <ion-item>
+      <ion-label position="floating">Repetir o Lançamento</ion-label>
+      <ion-toggle formControlName="repetirLancamento" [(ngModel)]="repetirLancamento" color="success"></ion-toggle>
+    </ion-item>
 
-  <ion-item *ngIf="repetirLancamento==1">
-    <ion-label position="floating">Quantidade de Vezes</ion-label>
-    <ion-input formControlName="quantidadeVezes" [(ngModel)]="lancamento.quantidadeVezes" type="number"></ion-input>
-  </ion-item>
+    <ion-item *ngIf="repetirLancamento==1">
+      <ion-label position="floating">Quantidade de Vezes</ion-label>
+      <ion-input formControlName="quantidadeVezes" [(ngModel)]="lancamento.quantidadeVezes" type="number"></ion-input>
+    </ion-item> -->
 
   <ion-item>
     <ion-label position="floating">Recebido?</ion-label>

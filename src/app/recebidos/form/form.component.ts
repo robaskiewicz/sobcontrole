@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Lancamentos } from '../../model/lancamentos';
 import { LancamentosService } from '../../services/lancamentos.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { ApiService } from '../../api.service';
 
@@ -15,16 +16,18 @@ import { ApiService } from '../../api.service';
 export class FormComponent implements OnInit {
 
   repetirLancamento = false;
-  lancamento:Lancamentos;
-  @Input() key:string;
+  lancamento : Lancamentos;
+  @Input() key : string;
   private todo: FormGroup;
+  corValor;
 
   tituloCode = String;
   tituloCodeIn = String;
   cotacaoHighDoDia = String;
 
   constructor(private formBuilder: FormBuilder, public modalController: ModalController, public lancamentosService:LancamentosService,
-  private apiService: ApiService) {
+  private apiService: ApiService,
+  public datepipe: DatePipe) {
     this.todo = this.formBuilder.group({
        descricao: ['ss', Validators.required],
        data: [new Date()],
@@ -47,14 +50,16 @@ export class FormComponent implements OnInit {
         this.lancamento = res;
       })
     }else{
-      this.lancamento = { key:'',
+      this.lancamento = {
+        key:'',
         descricao:'',
         valor: 0,
         tipo:'recebido',
         categoria:'Salário',
         data: new Date(),
-        quantidadeVezes:0,
-        situacao:true};
+        quantidadeVezes:1,
+        situacao:true,
+        repetirLancamento: false};
     }
 
   }
@@ -66,23 +71,38 @@ export class FormComponent implements OnInit {
     }
   }
 
-  salvarLancamento(){
-    if(this.key==undefined){
-      this.lancamentosService.criarLancamento(this.lancamento).then(res => {
-        console.log("DEU CERTO!!!!!");
-        console.log(res);
-          this.fecharModal();
-      }).catch(error=> console.log(error));
-
-    }else{
-
-      this.lancamentosService.atualizarLancamento(this.key, this.lancamento).then(res => {
-        console.log("DEU CERTO Alterar!!!!!");
-        console.log(res);
-          this.fecharModal();
-      }).catch(error=> console.log(error));
-    }
+  addMonths(m) {
+    var d = new Date(this.lancamento.data);
+    var years = Math.floor(m / 12);
+    var months = m - (years * 12);
+    if (years) d.setFullYear(d.getFullYear() + years);
+    if (months) d.setMonth(d.getMonth() + months);
+    return d;
   }
+
+  salvarLancamento(){
+     if (this.lancamento.valor > 0) {
+   if(this.key==undefined){
+     this.lancamentosService.criarLancamento(this.lancamento).then(res => {
+       console.log("DEU CERTO!!!!!");
+       console.log(res);
+         this.fecharModal();
+     }).catch(error=> console.log(error));
+
+   }else{
+
+     this.lancamentosService.atualizarLancamento(this.key, this.lancamento).then(res => {
+       console.log("DEU CERTO Alterar!!!!!");
+       console.log(res);
+         this.fecharModal();
+     }).catch(error=> console.log(error));
+   }
+ }else {
+      this.corValor = "red";
+    }
+}
+
+
 
   fecharModal() {
     this.modalController.dismiss({
@@ -98,5 +118,7 @@ export class FormComponent implements OnInit {
         this.tituloCodeIn = data[0]['codein'];
     })
   }
+
+
 
 }
